@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل المدرّسين | Quran Academy</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f3f4f6;
+  color:#1f2933;
+}
+
+/* Header */
+header{
+  background:#1f2933;
+  color:#fff;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
+
+.container{
+  max-width:700px;
+  margin:50px auto;
+  padding:0 20px;
+}
+
+h1{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+/* Form Card */
+.form-card{
+  background:#fff;
+  padding:40px;
+  border-radius:20px;
+  box-shadow:0 15px 30px rgba(0,0,0,.1);
+}
+
+.input-group{
+  margin-bottom:18px;
+}
+
+.input-group label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:bold;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+
+textarea{
+  resize:vertical;
+  min-height:80px;
+}
+
+.submit-btn{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:30px;
+  background:#fbbf24;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">أكاديمية القرآن</div>
+</header>
+
+<div class="container">
+  <h1>تسجيل بيانات المدرّس</h1>
+
+  <div class="form-card">
+    <form id="teacherForm">
+
+      <div class="input-group">
+        <label>الاسم الكامل</label>
+        <input type="text" id="name" required>
+      </div>
+
+      <div class="input-group">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="email" required>
+      </div>
+
+      <div class="input-group">
+        <label>التخصص</label>
+        <select id="specialization">
+          <option>قرآن وتجويد</option>
+          <option>تحفيظ القرآن</option>
+          <option>قراءات</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>سنوات الخبرة</label>
+        <input type="text" id="experience">
+      </div>
+
+      <div class="input-group">
+        <label>البرنامج الذي تدرّسه</label>
+        <select id="program">
+          <option>الحلقات الجماعية الكبرى</option>
+          <option>الحلقات الجماعية الصغرى</option>
+          <option>الحلقات الفردية</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label>أوقات التفرغ</label>
+        <input type="text" id="availability" placeholder="مثال: الأحد - الخميس 6م إلى 9م">
+      </div>
+
+      <div class="input-group">
+        <label>نبذة مختصرة عنك</label>
+        <textarea id="bio"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">إرسال الطلب</button>
+
+    </form>
+  </div>
+</div>
+
+<script>
+document.getElementById("teacherForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  alert("تم إرسال طلب التسجيل بنجاح، سيتم مراجعته من الإدارة.");
+  this.reset();
+
+  window.location.href = "teacher-pending.html";
+});
+</script>
+
+</body>
+</html>

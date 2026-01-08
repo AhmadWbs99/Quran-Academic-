@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>الملف الشخصي | المعلّم</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{margin:0;font-family:Arial;background:#f3f4f6;color:#1f2933}
+.container{max-width:800px;margin:40px auto;padding:20px}
+.card{background:#fff;padding:30px;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,.05)}
+h2{margin-bottom:20px}
+.group{margin-bottom:18px}
+label{display:block;margin-bottom:6px;font-weight:bold}
+input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #ccc}
+textarea{resize:vertical;min-height:90px}
+.actions{margin-top:20px;display:flex;gap:10px}
+.btn{padding:10px 18px;border:none;border-radius:20px;font-weight:bold;cursor:pointer}
+.save{background:#fbbf24}
+.back{background:#e5e7eb}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+    <h2>الملف الشخصي للمعلّم</h2>
+
+    <div class="group">
+      <label>الاسم الكامل</label>
+      <input type="text" value="الشيخ أحمد">
+    </div>
+
+    <div class="group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" value="teacher@email.com">
+    </div>
+
+    <div class="group">
+      <label>التخصص</label>
+      <input type="text" value="قرآن وتجويد">
+    </div>
+
+    <div class="group">
+      <label>سنوات الخبرة</label>
+      <input type="text" value="8 سنوات">
+    </div>
+
+    <div class="group">
+      <label>نبذة مختصرة</label>
+      <textarea>معلّم قرآن وتجويد بخبرة في التعليم عن بُعد.</textarea>
+    </div>
+
+    <div class="group">
+      <label>عدد الحلقات</label>
+      <input type="text" value="3 حلقات" disabled>
+    </div>
+
+    <div class="actions">
+      <button class="btn save">حفظ التغييرات</button>
+      <button class="btn" onclick="window.location.href='edit-teacher.html'"> تعديل البيانات </button>
+      <button class="btn back" onclick="history.back()">رجوع</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

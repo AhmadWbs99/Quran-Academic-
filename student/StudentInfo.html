@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معلومات الطالب | Quran Academy</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f3f4f6;
+}
+
+.container{
+  max-width:700px;
+  margin:50px auto;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 15px 30px rgba(0,0,0,.1);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  padding:12px 0;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.info-row span{
+  font-weight:bold;
+}
+
+.actions{
+  margin-top:25px;
+  display:flex;
+  gap:10px;
+}
+
+button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.edit{
+  background:#2563eb;
+  color:#fff;
+}
+
+.back{
+  background:#9ca3af;
+  color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+    <h1>معلومات الطالب</h1>
+
+    <div class="info-row">
+      <span>الاسم الكامل</span>
+      <div id="name">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>البريد الإلكتروني</span>
+      <div id="email">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>المستوى</span>
+      <div id="level">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>الدولة</span>
+      <div id="country">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>تاريخ الانضمام</span>
+      <div id="join">—</div>
+    </div>
+
+    <div class="actions">
+      <button class="edit" onclick="goEdit()">تعديل البيانات</button>
+      <button class="back" onclick="goBack()">رجوع</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  document.getElementById("name").innerText =
+    localStorage.getItem("studentName") || "غير محدد";
+
+  document.getElementById("email").innerText =
+    localStorage.getItem("studentEmail") || "غير محدد";
+
+  document.getElementById("level").innerText =
+    localStorage.getItem("studentLevel") || "غير محدد";
+
+  document.getElementById("country").innerText =
+    localStorage.getItem("studentCountry") || "غير محدد";
+
+  document.getElementById("join").innerText =
+    localStorage.getItem("studentJoin") || "—";
+});
+
+function goEdit(){
+  window.location.href = "edit-student.html";
+}
+
+function goBack(){
+  window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>

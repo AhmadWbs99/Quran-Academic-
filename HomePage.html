@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quran Academy</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#1e3a8a;
+  --accent:#fbbf24;
+  --bg:#f8fafc;
+  --white:#ffffff;
+  --text:#0f172a;
+  --shadow:0 10px 25px rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:Poppins,Cairo,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+body[dir="rtl"]{font-family:Cairo,sans-serif}
+
+/* Header */
+header{
+  background:var(--white);
+  box-shadow:var(--shadow);
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+}
+
+#logo{
+  font-size:22px;
+  font-weight:700;
+  color:var(--primary);
+}
+
+nav{
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
+
+nav a{
+  text-decoration:none;
+  font-weight:600;
+  color:var(--text);
+}
+
+.login-btn{
+  background:var(--accent);
+  padding:8px 18px;
+  border-radius:20px;
+  text-decoration:none;
+  color:#000;
+  font-weight:600;
+}
+
+/* Mobile */
+.menu-btn{
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+}
+
+@media(max-width:768px){
+  nav{
+    position:absolute;
+    top:65px;
+    left:0;
+    width:100%;
+    background:var(--white);
+    flex-direction:column;
+    align-items:center;
+    display:none;
+    box-shadow:var(--shadow);
+  }
+  nav.show{display:flex}
+  .menu-btn{display:block}
+}
+
+/* Hero */
+.hero{
+background:url("Islamic-Background.jpg") center/cover no-repeat;
+  color:#fff;
+  text-align:center;
+  padding:90px 20px;
+}
+.hero h1{font-size:36px;margin-bottom:15px}
+
+/* Sections */
+section{padding:80px 20px}
+.section-title{text-align:center;font-size:32px;margin-bottom:40px}
+
+/* Programs */
+.programs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.program-card{
+  background:#fff;
+  padding:30px;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+
+.program-btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 30px;
+  background:var(--accent);
+  color:#000;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:600;
+}
+
+/* Contact */
+.contact-form{
+  max-width:450px;
+  margin:auto;
+  background:#fff;
+  padding:35px;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.contact-form input,
+.contact-form textarea{
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+}
+
+button{
+  background:var(--accent);
+  border:none;
+  padding:14px;
+  border-radius:30px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* Footer */
+footer{
+  background:var(--primary);
+  color:#fff;
+  text-align:center;
+  padding:20px;
+}
+
+/* Language button */
+.lang-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+body[dir="rtl"] .lang-btn{right:auto;left:20px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div id="logo"></div>
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  <nav id="nav">
+    <a id="navHome" href="#"></a>
+    <a id="navAbout" href="#about"></a>
+    <a id="navPrograms" href="#programs"></a>
+    <a id="navContact" href="#contact"></a>
+    <a id="loginBtn" href="login.html" class="login-btn"></a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1 id="heroTitle"></h1>
+  <p id="heroDesc"></p>
+</section>
+
+<section id="about">
+  <h2 class="section-title" id="aboutTitle"></h2>
+  <p id="aboutText" style="max-width:900px;margin:auto;text-align:center"></p>
+</section>
+
+<section id="programs">
+  <h2 class="section-title" id="programsTitle"></h2>
+
+  <div class="programs-grid">
+    <div class="program-card">
+      <h3 id="p1"></h3>
+      <a class="program-btn" href="group-classes.html" id="d1"></a>
+    </div>
+    <div class="program-card">
+      <h3 id="p2"></h3>
+      <a class="program-btn" href="small-classes.html" id="d2"></a>
+    </div>
+    <div class="program-card">
+      <h3 id="p3"></h3>
+      <a class="program-btn" href="IndividualClass.html" id="d3"></a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title" id="contactTitle"></h2>
+  <form class="contact-form">
+    <input placeholder="Name">
+    <input placeholder="Email">
+    <textarea placeholder="Message"></textarea>
+    <button id="sendBtn"></button>
+  </form>
+</section>
+
+<footer id="footer"></footer>
+
+<button class="lang-btn" onclick="toggleLang()">EN</button>
+
+<script>
+const t = {
+  ar:{
+    logo:"أكاديمية القرآن الكريم",
+    home:"الرئيسية",
+    about:"من نحن",
+    programs:"البرامج",
+    contact:"تواصل",
+    login:"تسجيل الدخول",
+    hero:"تعليم القرآن الكريم عن بُعد",
+    desc:"منصة تعليمية رقمية متخصصة في تعليم القرآن الكريم",
+    aboutTitle:"من نحن",
+    aboutText: "منصة تعليمية متخخصة في إقرا القرآن الكريم للرجال والفتيان عبر الانترنت و تهدف الى استقطاب اكبر عدد من المسلمين لتلاوة ككتاب الله وحفظه و ضبطه بالقراءات والتجويد و مع توفير بيئة تعليمية منظمة تراعي خصوصية الشعائر .",
+    programsTitle:"الحلقات",
+    p1:"الحلقات الجماعية الكبرى",
+    p2:"الحلقات الجماعية الصغرى",
+    p3:"الحلقات الفردية",
+    details:"عرض التفاصيل",
+    contactTitle:"تواصل معنا",
+    send:"إرسال",
+    footer:"© 2025 أكاديمية القرآن"
+  },
+  en:{
+    logo:"Quran Academy",
+    home:"Home",
+    about:"About Us",
+    programs:"Programs",
+    contact:"Contact",
+    login:"Login",
+    hero:"Online Quran Education",
+    desc:"A professional digital Quran learning platform",
+    aboutTitle:"About Us",
+    aboutText:"A specialized digital educational platform dedicated to teaching the recitation of the Holy Qur’an to men and boys online. It aims to attract the largest possible number of Muslims to recite, memorize, and master the Book of Allah according to proper recitation methods and Tajweed rules, while providing a well-structured learning environment that respects the sanctity of religious practices.",
+    programsTitle:"Our Programs",
+    p1:"Large Group Classes",
+    p2:"Small Group Classes",
+    p3:"One-to-One Classes",
+    details:"Details",
+    contactTitle:"Contact Us",
+    send:"Send",
+    footer:"© 2025 Quran Academy"
+  }
+};
+
+let lang = localStorage.getItem("lang") || "ar";
+
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.body.dir = lang === "ar" ? "rtl" : "ltr";
+
+  logo.innerText = t[lang].logo;
+  navHome.innerText = t[lang].home;
+  navAbout.innerText = t[lang].about;
+  navPrograms.innerText = t[lang].programs;
+  navContact.innerText = t[lang].contact;
+  loginBtn.innerText = t[lang].login;
+  heroTitle.innerText = t[lang].hero;
+  heroDesc.innerText = t[lang].desc;
+  aboutTitle.innerText = t[lang].aboutTitle;
+  aboutText.innerText = t[lang].aboutText;
+  programsTitle.innerText = t[lang].programsTitle;
+  p1.innerText = t[lang].p1;
+  p2.innerText = t[lang].p2;
+  p3.innerText = t[lang].p3;
+  d1.innerText = t[lang].details;
+  d2.innerText = t[lang].details;
+  d3.innerText = t[lang].details;
+  contactTitle.innerText = t[lang].contactTitle;
+  sendBtn.innerText = t[lang].send;
+  footer.innerText = t[lang].footer;
+
+  document.querySelector(".lang-btn").innerText = lang === "ar" ? "EN" : "AR";
+  localStorage.setItem("lang", lang);
+}
+
+function toggleLang(){
+  lang = lang === "ar" ? "en" : "ar";
+  applyLang();
+}
+
+function toggleMenu(){
+  document.getElementById("nav").classList.toggle("show");
+}
+
+applyLang();
+</script>
+
+</body>
+</html>

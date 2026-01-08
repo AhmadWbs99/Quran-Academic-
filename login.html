@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Login | Quran Academy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f3f4f6;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.card{
+  background:#fff;
+  width:380px;
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
+
+.top-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.lang-btn{
+  border:none;
+  background:#eee;
+  padding:5px 12px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.roles{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.roles button{
+  flex:1;
+  padding:10px;
+  border-radius:20px;
+  border:1px solid #ddd;
+  background:#fff;
+  cursor:pointer;
+}
+
+.roles .active{
+  background:#fbbf24;
+  border-color:#fbbf24;
+  font-weight:bold;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+.login-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:30px;
+  background:#fbbf24;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.register-link{
+  text-align:center;
+  margin-top:15px;
+  font-size:14px;
+}
+.register-link a{
+  color:#f59e0b;
+  text-decoration:none;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="top-bar">
+    <div id="logo">Quran Academy</div>
+    <button class="lang-btn" onclick="toggleLang()">AR</button>
+  </div>
+
+  <h2 id="title">Login</h2>
+
+  <div class="roles">
+    <button id="studentBtn" class="active" onclick="selectRole('student')">Student</button>
+    <button id="teacherBtn" onclick="selectRole('teacher')">Teacher</button>
+  </div>
+
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
+  <button class="login-btn" onclick="handleLogin()" id="loginBtn">Login</button>
+
+  <div class="register-link">
+    <span id="noAccount">Don’t have an account?</span>
+    <a href="register.html" id="registerLink">Create one</a>
+  </div>
+</div>
+
+<script>
+/* ---------- ROLE ---------- */
+let selectedRole = "student";
+
+function selectRole(role){
+  selectedRole = role;
+  studentBtn.classList.remove("active");
+  teacherBtn.classList.remove("active");
+
+  role === "student"
+    ? studentBtn.classList.add("active")
+    : teacherBtn.classList.add("active");
+}
+
+function handleLogin(){
+  if(selectedRole === "student"){
+    window.location.href = "student/dashboard.html";
+  }else{
+    window.location.href = "teacher/dashboard.html";
+  }
+}
+
+/* ---------- LANGUAGE ---------- */
+let lang = "en";
+
+const t = {
+  en:{
+    title:"Login",
+    student:"Student",
+    teacher:"Teacher",
+    email:"Email",
+    password:"Password",
+    login:"Login",
+    noAccount:"Don’t have an account?",
+    register:"Create one",
+    logo:"Quran Academy"
+  },
+  ar:{
+    title:"تسجيل الدخول",
+    student:"طالب",
+    teacher:"معلّم",
+    email:"البريد الإلكتروني",
+    password:"كلمة المرور",
+    login:"دخول",
+    noAccount:"ليس لديك حساب؟",
+    register:"سجل الآن",
+    logo:"أكاديمية القرآن"
+  }
+};
+
+function toggleLang(){
+  lang = lang === "en" ? "ar" : "en";
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+  title.innerText = t[lang].title;
+  studentBtn.innerText = t[lang].student;
+  teacherBtn.innerText = t[lang].teacher;
+  email.placeholder = t[lang].email;
+  password.placeholder = t[lang].password;
+  loginBtn.innerText = t[lang].login;
+  noAccount.innerText = t[lang].noAccount;
+  registerLink.innerText = t[lang].register;
+  logo.innerText = t[lang].logo;
+}
+</script>
+
+</body>
+</html>

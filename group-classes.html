@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">الحلقات الجماعية الكبرى</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#1e3a8a;
+  --accent:#fbbf24;
+  --bg:#f8fafc;
+  --white:#ffffff;
+  --text:#0f172a;
+  --shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+body{
+  font-family:Cairo,sans-serif;
+  background:var(--bg);
+  margin:0;
+  color:var(--text);
+}
+
+/* Header */
+header{
+  background:var(--white);
+  padding:20px;
+  box-shadow:var(--shadow);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:700;
+  color:var(--primary);
+}
+
+nav a{
+  margin:0 10px;
+  text-decoration:none;
+  color:var(--text);
+  font-weight:600;
+}
+
+.lang-btn{
+  background:var(--accent);
+  border:none;
+  padding:8px 16px;
+  border-radius:20px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.register-btn{
+  display:inline-block;
+  background:#fbbf24;
+  padding:15px 40px;
+  border-radius:40px;
+  font-weight:700;
+  text-decoration:none;
+  color:#000;
+}
+
+
+/* Section */
+.section{
+  max-width:1100px;
+  margin:60px auto;
+  padding:0 20px;
+}
+
+.intro{
+  background:var(--white);
+  padding:35px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  text-align:center;
+  line-height:2;
+  font-size:18px;
+}
+
+/* Cards */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
+  margin-top:50px;
+}
+
+.card{
+  background:var(--white);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+}
+
+.card h3{
+  color:var(--primary);
+}
+
+.card ul{
+  list-style:none;
+  padding:0;
+  line-height:1.9;
+}
+
+.card ul li::before{
+  content:"✓ ";
+  color:var(--accent);
+  font-weight:bold;
+}
+
+/* Info */
+.info{
+  margin-top:60px;
+  background:var(--white);
+  padding:40px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.box{
+  background:#f1f5f9;
+  padding:20px;
+  border-radius:15px;
+}
+
+/* CTA */
+.cta{
+  text-align:center;
+  margin:70px 0;
+}
+
+.cta a{
+  background:var(--accent);
+  padding:15px 40px;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:700;
+  color:#000;
+}
+
+/* Footer */
+footer{
+  background:var(--primary);
+  color:#fff;
+  text-align:center;
+  padding:25px;
+}
+
+@media(max-width:768px){
+  header{gap:15px; justify-content:center;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo" id="logo"></div>
+
+  <nav>
+    <a href="HomePage.html" id="navHome"></a>
+    <a href="HomePage.html#programs" id="navPrograms"></a>
+    <a href="HomePage.html#contact" id="navContact"></a>
+  </nav>
+
+  <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+</header>
+
+<section class="section">
+
+<h1 id="title" style="text-align:center;color:var(--primary)"></h1>
+
+<div class="intro" id="intro"></div>
+
+<div class="cards">
+  <div class="card">
+    <h3 id="featuresTitle"></h3>
+    <ul id="featuresList"></ul>
+  </div>
+
+  <div class="card">
+    <h3 id="suitableTitle"></h3>
+    <ul id="suitableList"></ul>
+  </div>
+</div>
+
+<div class="info">
+  <h2 id="detailsTitle"></h2>
+  <div class="info-grid">
+    <div class="box" id="d1"></div>
+    <div class="box" id="d2"></div>
+    <div class="box" id="d3"></div>
+    <div class="box" id="d4"></div>
+    <div class="box" id="d5"></div>
+    <div class="box" id="d6"></div>
+    <div class="box" id="d7"></div>
+
+  </div>
+</div>
+
+<div class="cta">
+  <a href="#" id="registerBtn" onclick="goToPayment()">اشترك الآن</a>
+</div>
+</section>
+
+<footer id="footer"></footer>
+
+<script>
+let lang="ar";
+
+const t={
+ar:{
+  logo:"أكاديمية القرآن",
+  title:"الحلقات الجماعية الكبرى",
+  intro:"الحلقات الجماعية الكبرى مخصصة للتعليم الجماعي المنظم بعدد كبير من الطلاب، وتهدف إلى تحسين التلاوة وتعليم أساسيات التجويد في بيئة تعليمية منضبطة.",
+  featuresTitle:"مميزات الحلقة",
+  features:[
+    "عدد طلاب كبير",
+    "تنظيم جماعي واضح",
+    "تصحيح عام للتلاوة",
+    "مناسبة للمبتدئين"
+  ],
+  suitableTitle:"مناسبة لـ",
+  suitable:[
+    "المبتدئين",
+    "تعلم أساسيات التلاوة",
+    "الالتحاق بالحلقات لأول مرة",
+    "الانتقال لاحقًا لمستويات أعلى"
+  ],
+  detailsTitle:"تفاصيل الحلقة",
+  details:[
+    "عدد الطلاب: 10 – 20 طالب",
+    "الفئة: الرجال والفتيان",
+    "مدة الحصة : ساعتان ",
+    "المنهج: أساسيات التلاوة والتجويد",
+    "المستوى: مبتدئ",
+    "المنصة: Zoom ",
+    "الاسعار : الاشتراك كامل  50 دولار , الاشتراك الجزئي 25 دولار "
+  ],
+  register:"اشترك الآن",
+  home:"الرئيسية",
+  programs:"البرامج",
+  contact:"تواصل",
+  footer:"© 2025 أكاديمية القرآن – جميع الحقوق محفوظة"
+},
+en:{
+  logo:"Quran Academy",
+  title:"Large Group Classes",
+  intro:"Large group classes are designed for structured learning with a larger number of students, focusing on improving recitation and teaching basic Tajweed in an organized environment.",
+  featuresTitle:"Class Features",
+  features:[
+    "Large number of students",
+    "Well-organized group learning",
+    "General recitation correction",
+    "Ideal for beginners"
+  ],
+  suitableTitle:"Suitable For",
+  suitable:[
+    "Beginners",
+    "Learning basic recitation",
+    "First-time enrollment",
+    "Progressing to higher levels later"
+  ],
+  detailsTitle:"Class Details",
+  details:[
+    "Students: 10 – 20",
+    "Category: Men & Boys",
+    "Duration: 2 hours",
+    "Curriculum: Basic Recitation & Tajweed",
+    "Level: Beginner",
+    "Platform: Zoom ",
+    "Price : Full subscription $50, Partial subscription $25 "
+  ],
+  register:"Subscribe Now",
+  home:"Home",
+  programs:"Programs",
+  contact:"Contact",
+  footer:"© 2025 Quran Academy – All Rights Reserved"
+}
+};
+
+function render(){
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+
+  logo.innerText=t[lang].logo;
+  title.innerText=t[lang].title;
+  intro.innerText=t[lang].intro;
+  featuresTitle.innerText=t[lang].featuresTitle;
+  suitableTitle.innerText=t[lang].suitableTitle;
+  detailsTitle.innerText=t[lang].detailsTitle;
+  registerBtn.innerText=t[lang].register;
+  navHome.innerText=t[lang].home;
+  navPrograms.innerText=t[lang].programs;
+  navContact.innerText=t[lang].contact;
+  footer.innerText=t[lang].footer;
+  pageTitle.innerText=t[lang].title;
+
+  featuresList.innerHTML="";
+  t[lang].features.forEach(i=>featuresList.innerHTML+=`<li>${i}</li>`);
+
+  suitableList.innerHTML="";
+  t[lang].suitable.forEach(i=>suitableList.innerHTML+=`<li>${i}</li>`);
+
+  t[lang].details.forEach((d,i)=>document.getElementById("d"+(i+1)).innerText=d);
+
+  langBtn.innerText=lang==="ar"?"EN":"AR";
+}
+
+function toggleLang(){
+  lang=lang==="ar"?"en":"ar";
+  render();
+}
+
+function goToPayment(){
+  const program = "الحلقات الجماعية الكبرى"; // غيّرها حسب الصفحة
+  const price = 50; // السعر الصحيح
+
+  window.location.href =
+    "payment.html?program=" + encodeURIComponent(program) +
+    "&price=" + price;
+}
+
+render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>الرئيسية | المعلم</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{margin:0;font-family:Arial;background:#f3f4f6;color:#1f2933}
+.container{padding:30px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:#fff;padding:20px;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,.05)}
+table{width:100%;margin-top:30px;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden}
+th,td{padding:14px;text-align:center}
+th{background:#1f2933;color:#fff}
+tr:nth-child(even){background:#f9fafb}
+.notice{background:#fff;padding:20px;border-radius:16px;margin-top:30px}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>مرحبًا بك 👋</h2>
+  <p>نسأل الله أن يبارك في تعليمك لكتابه.</p>
+
+  <!-- Cards -->
+  <div class="cards">
+    <div class="card">
+      <h3>عدد الحلقات</h3>
+      <p>3 حلقات</p>
+    </div>
+    <div class="card">
+      <h3>عدد الطلاب</h3>
+      <p>18 طالب</p>
+    </div>
+    <div class="card">
+      <h3>حصص اليوم</h3>
+      <p>4 حصص</p>
+    </div>
+  </div>
+
+  <!-- Today Schedule -->
+  <table>
+    <thead>
+      <tr>
+        <th>الحلقة</th>
+        <th>عدد الطلاب</th>
+        <th>الوقت</th>
+        <th>الحالة</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>الحلقة الجماعية الكبرى</td>
+        <td>10</td>
+        <td>6:00 م</td>
+        <td>نشطة</td>
+      </tr>
+      <tr>
+        <td>حلقة فردية</td>
+        <td>1</td>
+        <td>8:00 م</td>
+        <td>مجدولة</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Notices -->
+  <div class="notice">
+    <h3>تنبيهات</h3>
+    <ul>
+      <li>طالب جديد بانتظار المراجعة.</li>
+      <li>تذكير: رفع تقرير الأسبوع.</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

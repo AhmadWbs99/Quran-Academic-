@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الدفع | أكاديمية القرآن</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f3f4f6;
+  color:#1f2933;
+}
+
+.container{
+  max-width:420px;
+  margin:80px auto;
+  background:#fff;
+  padding:35px;
+  border-radius:20px;
+  box-shadow:0 15px 30px rgba(0,0,0,.1);
+  text-align:center;
+}
+
+h2{
+  margin-bottom:15px;
+}
+
+.price{
+  font-size:22px;
+  margin:20px 0;
+  color:#16a34a;
+  font-weight:bold;
+}
+
+.pay-btn{
+  width:100%;
+  padding:15px;
+  background:#fbbf24;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.back-btn{
+  margin-top:15px;
+  background:none;
+  border:none;
+  color:#2563eb;
+  cursor:pointer;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2 id="programName">اسم الحلقة</h2>
+
+  <div class="price">
+    السعر: <span id="programPrice"></span> دولار
+  </div>
+
+<button class="pay-btn" onclick="payNow()">
+  ادفع الآن
+</button>
+
+  <button class="back-btn" onclick="history.back()">
+    العودة
+  </button>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+const program = params.get("program");
+const price = params.get("price");
+
+document.getElementById("programName").innerText = program;
+document.getElementById("programPrice").innerText = price;
+
+
+function payNow(){
+  alert(
+    "سيتم دفع مبلغ " + price + " دولار\n" +
+    "للاشتراك في: " + program
+  );
+
+  // لاحقًا هنا تربط PayPal أو Apple Pay
+}
+
+// في حال دخل الصفحة مباشرة بدون اختيار حلقة
+if(!program || !price){
+  document.getElementById("programName").innerText = "لم يتم اختيار حلقة";
+  document.getElementById("programPrice").innerText = "--";
+}else{
+  document.getElementById("programName").innerText = program;
+  document.getElementById("programPrice").innerText = price;
+}
+</script>
+
+</body>
+</html>
