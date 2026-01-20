@@ -1,0 +1,154 @@
+/*
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+  */
+
+
+:root {
+  --primary: #1e3a8a;
+  --accent: #fbbf24;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --text: #0f172a;
+  --shadow: 0 10px 25px rgba(0, 0, 0, .08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: sans-serif;
+}
+
+/* Header */
+header.header-style {
+  background: var(--white);
+  box-shadow: var(--shadow);
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+#logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+nav a, nav .login-btn {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.login-btn {
+  background: var(--accent);
+  padding: 8px 18px;
+  border-radius: 20px;
+  color: #000 !important;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("/Islamic-Background.jpg") center/cover no-repeat;
+  color: #fff;
+  text-align: center;
+  padding: 90px 20px;
+  min-height: 300px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+/* Mobile Menu */
+.menu-btn {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  nav {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    flex-direction: column;
+    padding: 20px;
+    display: none;
+    box-shadow: var(--shadow);
+  }
+  nav.show {
+    display: flex;
+  }
+  .menu-btn {
+    display: block;
+  }
+}
+
+/* Language Button */
+.lang-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: var(--shadow);
+}
+
+[dir="rtl"] .lang-btn {
+  right: auto;
+  left: 20px;
+}
