@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعديل بيانات الطالب</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f3f4f6;
+}
+.container{
+  max-width:600px;
+  margin:50px auto;
+  padding:20px;
+}
+.card{
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 15px 30px rgba(0,0,0,.1);
+}
+.input-group{
+  margin-bottom:15px;
+}
+label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:bold;
+}
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+.btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  background:#16a34a;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:10px;
+}
+.back{
+  background:#9ca3af;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+    <h2 style="text-align:center;margin-bottom:20px;">تعديل البيانات</h2>
+
+    <div class="input-group">
+      <label>الاسم الكامل</label>
+      <input type="text" value="عبدالله محمد">
+    </div>
+
+    <div class="input-group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" value="student@email.com">
+    </div>
+
+    <div class="input-group">
+      <label>المستوى</label>
+      <input type="text" value="متوسط">
+    </div>
+
+    <div class="input-group">
+      <label>الدولة</label>
+      <input type="text" value="السعودية">
+    </div>
+
+    <button class="btn" onclick="saveData()">حفظ التغييرات</button>
+    <button class="btn back" onclick="goBack()">رجوع</button>
+  </div>
+</div>
+
+<script>
+function saveData(){
+  alert("تم حفظ البيانات بنجاح");
+  window.location.href = "profile.html";
+}
+function goBack(){
+  window.location.href = "profile.html";
+}
+</script>
+
+</body>
+</html>

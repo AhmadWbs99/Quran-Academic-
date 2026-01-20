@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعديل بيانات المعلّم | Quran Academy</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f3f4f6;
+}
+
+.container{
+  max-width:700px;
+  margin:50px auto;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  padding:35px;
+  border-radius:20px;
+  box-shadow:0 15px 30px rgba(0,0,0,.1);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.input-group{
+  margin-bottom:18px;
+}
+
+label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:bold;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+
+textarea{
+  resize:vertical;
+  min-height:80px;
+}
+
+.actions{
+  margin-top:20px;
+  display:flex;
+  gap:10px;
+}
+
+button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.save{
+  background:#16a34a;
+  color:#fff;
+}
+
+.back{
+  background:#9ca3af;
+  color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+    <h1>تعديل بيانات المعلّم</h1>
+
+    <div class="input-group">
+      <label>الاسم الكامل</label>
+      <input type="text" id="name">
+    </div>
+
+    <div class="input-group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" id="email">
+    </div>
+
+    <div class="input-group">
+      <label>التخصص</label>
+      <select id="specialization">
+        <option>قرآن وتجويد</option>
+        <option>تحفيظ القرآن</option>
+        <option>قراءات</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label>سنوات الخبرة</label>
+      <input type="text" id="experience">
+    </div>
+
+    <div class="input-group">
+      <label>البرامج التي تدرّسها</label>
+      <select id="program">
+        <option>الحلقات الجماعية الكبرى</option>
+        <option>الحلقات الجماعية الصغرى</option>
+        <option>الحلقات الفردية</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label>أوقات التفرغ</label>
+      <input type="text" id="availability">
+    </div>
+
+    <div class="input-group">
+      <label>نبذة مختصرة</label>
+      <textarea id="bio"></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="save" onclick="saveTeacher()">حفظ التغييرات</button>
+      <button class="back" onclick="goBack()">رجوع</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  document.getElementById("name").value =
+    localStorage.getItem("teacherName") || "";
+
+  document.getElementById("email").value =
+    localStorage.getItem("teacherEmail") || "";
+
+  document.getElementById("specialization").value =
+    localStorage.getItem("teacherSpec") || "قرآن وتجويد";
+
+  document.getElementById("experience").value =
+    localStorage.getItem("teacherExp") || "";
+
+  document.getElementById("program").value =
+    localStorage.getItem("teacherProgram") || "الحلقات الجماعية الكبرى";
+
+  document.getElementById("availability").value =
+    localStorage.getItem("teacherAvail") || "";
+
+  document.getElementById("bio").value =
+    localStorage.getItem("teacherBio") || "";
+});
+
+function saveTeacher(){
+  localStorage.setItem("teacherName", document.getElementById("name").value);
+  localStorage.setItem("teacherEmail", document.getElementById("email").value);
+  localStorage.setItem("teacherSpec", document.getElementById("specialization").value);
+  localStorage.setItem("teacherExp", document.getElementById("experience").value);
+  localStorage.setItem("teacherProgram", document.getElementById("program").value);
+  localStorage.setItem("teacherAvail", document.getElementById("availability").value);
+  localStorage.setItem("teacherBio", document.getElementById("bio").value);
+
+  alert("تم حفظ بيانات المعلّم بنجاح");
+  window.location.href = "profile.html";
+}
+
+function goBack(){
+  window.location.href = "profile.html";
+}
+</script>
+
+</body>
+</html>

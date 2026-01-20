@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>معلومات المعلّم | Quran Academy</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f3f4f6;
+}
+
+.container{
+  max-width:750px;
+  margin:50px auto;
+  padding:20px;
+}
+
+.card{
+  background:#fff;
+  padding:35px;
+  border-radius:20px;
+  box-shadow:0 15px 30px rgba(0,0,0,.1);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  padding:14px 0;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.info-row span{
+  font-weight:bold;
+}
+
+.actions{
+  margin-top:25px;
+  display:flex;
+  gap:10px;
+}
+
+button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.edit{
+  background:#2563eb;
+  color:#fff;
+}
+
+.back{
+  background:#9ca3af;
+  color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+    <h1>معلومات المعلّم</h1>
+
+    <div class="info-row">
+      <span>الاسم الكامل</span>
+      <div id="name">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>البريد الإلكتروني</span>
+      <div id="email">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>التخصص</span>
+      <div id="spec">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>سنوات الخبرة</span>
+      <div id="exp">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>البرامج التي يدرّسها</span>
+      <div id="program">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>أوقات التفرغ</span>
+      <div id="avail">—</div>
+    </div>
+
+    <div class="info-row">
+      <span>نبذة</span>
+      <div id="bio">—</div>
+    </div>
+
+    <div class="actions">
+      <button class="edit" onclick="goEdit()">تعديل البيانات</button>
+      <button class="back" onclick="goBack()">رجوع</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  document.getElementById("name").innerText =
+    localStorage.getItem("teacherName") || "غير محدد";
+
+  document.getElementById("email").innerText =
+    localStorage.getItem("teacherEmail") || "غير محدد";
+
+  document.getElementById("spec").innerText =
+    localStorage.getItem("teacherSpec") || "غير محدد";
+
+  document.getElementById("exp").innerText =
+    localStorage.getItem("teacherExp") || "غير محدد";
+
+  document.getElementById("program").innerText =
+    localStorage.getItem("teacherProgram") || "غير محدد";
+
+  document.getElementById("avail").innerText =
+    localStorage.getItem("teacherAvail") || "غير محدد";
+
+  document.getElementById("bio").innerText =
+    localStorage.getItem("teacherBio") || "—";
+});
+
+function goEdit(){
+  window.location.href = "edit-teacher.html";
+}
+
+function goBack(){
+  window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>

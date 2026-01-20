@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">صفحة التسجيل</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--primary:#1e3a8a;
+--accent:#fbbf24;
+--bg:#f8fafc;
+--white:#ffffff;
+--text:#0f172a;
+--shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+body{
+font-family:Cairo,sans-serif;
+background:var(--bg);
+margin:0;
+color:var(--text);
+}
+
+/* Header */
+header{
+background:var(--white);
+padding:20px;
+box-shadow:var(--shadow);
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+}
+
+.logo{
+font-size:22px;
+font-weight:700;
+color:var(--primary);
+}
+
+nav a{
+margin:0 10px;
+text-decoration:none;
+color:var(--text);
+font-weight:600;
+}
+
+.register-box{
+  max-width:420px;
+  margin:80px auto;
+  background:#fff;
+  padding:35px;
+  border-radius:20px;
+  box-shadow:0 15px 30px rgba(0,0,0,.08);
+  font-family:'Cairo',sans-serif;
+  text-align:center;
+}
+
+.title{
+  font-size:24px;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  font-size:14px;
+  color:#666;
+  margin-bottom:25px;
+}
+
+.roles{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.role-card{
+  border:2px solid #e5e7eb;
+  border-radius:16px;
+  padding:15px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.role-card input{
+  display:none;
+}
+
+.role-card .content{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  text-align:right;
+}
+
+.role-card .icon{
+  font-size:28px;
+}
+
+.role-card strong{
+  display:block;
+  font-size:16px;
+}
+
+.role-card small{
+  font-size:13px;
+  color:#666;
+}
+
+.role-card:hover{
+  border-color:#1e3a8a;
+}
+
+.role-card input:checked + .content{
+  color:#1e3a8a;
+}
+
+.role-card input:checked{
+  display:none;
+}
+
+.role-card input:checked + .content::before{
+  content:"✔";
+  margin-left:auto;
+  color:#16a34a;
+  font-weight:bold;
+}
+
+.btn{
+  width:100%;
+  padding:14px;
+  background:#1e3a8a;
+  color:#fff;
+  border:none;
+  border-radius:30px;
+  font-weight:700;
+  cursor:pointer;
+  font-size:16px;
+}
+
+.btn:hover{
+  background:#162f6b;
+}
+
+
+.lang-btn{
+background:var(--accent);
+border:none;
+width: 40px;
+height: 40px;
+border-radius:20px;
+font: size 13px;;
+cursor:pointer;
+}
+
+
+
+.container h1{
+text-align:center;
+color:var(--primary);
+margin-bottom:30px;
+}
+
+label{
+display:block;
+margin-bottom:8px;
+font-weight:600;
+}
+
+input, select, textarea{
+width:100%;
+padding:12px;
+margin-bottom:20px;
+border-radius:10px;
+border:1px solid #cbd5f5;
+font-family:inherit;
+}
+
+.user-type{
+  display:flex;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.user-type label{
+  flex:1;
+  padding:12px;
+  border:2px solid #e5e7eb;
+  border-radius:14px;
+  text-align:center;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.user-type input{
+  display:none;
+}
+
+.user-type input:checked + span{
+  color:#000;
+}
+
+.user-type input:checked + span,
+.user-type label:has(input:checked){
+  border-color:#fbbf24;
+  background:#fef3c7;
+}
+
+button{
+width:100%;
+padding:15px;
+background:var(--accent);
+border:none;
+border-radius:30px;
+font-weight:700;
+cursor:pointer;
+float: 0 auto;
+}
+
+/* Footer */
+footer{
+background:var(--primary);
+color:#fff;
+text-align:center;
+padding:25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo" id="logo">أكاديمية القرآن</div>
+
+<nav>
+    <a href="HomePage.html" id="navHome">الرئيسية</a>
+    <a href="HomePage.html#programs" id="navPrograms">البرامج</a>
+    <a href="HomePage.html#contact" id="navContact">تواصل</a>
+</nav>
+
+<button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+</header>
+
+<div class="container">
+<h1 id="title">نموذج التسجيل</h1>
+
+<div class="register-box">
+  <h2 class="title">إنشاء حساب</h2>
+  <p class="subtitle">اختر نوع الحساب للمتابعة</p>
+
+   <!-- User Type -->
+  <div class="user-type">
+    <label>
+      <input type="radio" name="role" value="student" checked>
+      <span id="studentText">طالب</span>
+    </label>
+    <label>
+      <input type="radio" name="role" value="teacher">
+      <span id="teacherText">معلّم</span>
+    </label>
+  </div>
+
+  <button class="btn" onclick="handleRegister()">متابعة التسجيل</button>
+</div>
+
+
+<script>
+let lang = "ar";
+
+const t = {
+  ar:{
+    title:"إنشاء حساب",
+    name:"الاسم الكامل",
+    email:"البريد الإلكتروني",
+    password:"كلمة المرور",
+    register:"تسجيل",
+    have:"لديك حساب بالفعل؟",
+    login:"تسجيل الدخول"
+  },
+  en:{
+    title:"Create Account",
+    name:"Full Name",
+    email:"Email",
+    password:"Password",
+    register:"Register",
+    have:"Already have an account?",
+    login:"Login"
+  }
+};
+
+function toggleLang(){
+  lang = lang === "ar" ? "en" : "ar";
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+  document.getElementById("title").innerText = t[lang].title;
+  document.getElementById("name").placeholder = t[lang].name;
+  document.getElementById("email").placeholder = t[lang].email;
+  document.getElementById("password").placeholder = t[lang].password;
+  document.getElementById("registerBtn").innerText = t[lang].register;
+  document.getElementById("haveAccount").innerText = t[lang].have;
+  document.getElementById("loginLink").innerText = t[lang].login;
+}
+function render(){
+document.documentElement.lang=lang;
+document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+
+logo.innerText=t[lang].logo;
+title.innerText=t[lang].title;
+submitBtn.innerText=t[lang].submit;
+navHome.innerText=t[lang].home;
+navPrograms.innerText=t[lang].programs;
+navContact.innerText=t[lang].contact;
+footer.innerText=t[lang].footer;
+
+document.getElementById("l1").innerText=t[lang].labels[0];
+document.getElementById("l2").innerText=t[lang].labels[1];
+document.getElementById("l3").innerText=t[lang].labels[2];
+document.getElementById("l4").innerText=t[lang].labels[3];
+document.getElementById("l5").innerText=t[lang].labels[4];
+
+langBtn.innerText=lang==="ar"?"EN":"AR";
+}
+
+function toggleLang(){
+lang=lang==="ar"?"en":"ar";
+render();
+}
+
+
+const params = new URLSearchParams(window.location.search);
+const type = params.get("type");
+
+const classSelect = document.querySelector("select");
+
+if(type){
+if(type==="large") classSelect.value="الحلقات الجماعية الكبرى";
+if(type==="small") classSelect.value="الحلقات الجماعية الصغرى";
+if(type==="individual") classSelect.value="الحلقات الفردية";
+}
+
+function handleRegister(){
+  const role = document.querySelector('input[name="role"]:checked').value;
+
+  if(role === "teacher"){
+    window.location.href = "teacher-register.html";
+  } else {
+    window.location.href = "student-register.html"; 
+    // أو register.html إذا نفس الصفحة
+  }
+}
+
+
+
+
+render();
+</script>
+
+</body>
+</html>

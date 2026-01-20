@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الطلاب | لوحة تحكم المعلّم</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f3f4f6;
+}
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:20px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 10px 20px rgba(0,0,0,.08);
+}
+th,td{
+  padding:14px;
+  text-align:center;
+  border-bottom:1px solid #e5e7eb;
+}
+th{
+  background:#1f2933;
+  color:#fff;
+}
+.status{
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:14px;
+}
+.active{background:#bbf7d0;}
+.warning{background:#fde68a;}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1 style="text-align:center;margin-bottom:30px;">قائمة الطلاب</h1>
+
+  <table>
+    <tr>
+      <th>اسم الطالب</th>
+      <th>الحلقة</th>
+      <th>الحضور</th>
+      <th>المستوى</th>
+      <th>الحالة</th>
+    </tr>
+    <tr>
+      <td>عبدالله محمد</td>
+      <td>التجويد</td>
+      <td>95%</td>
+      <td>متقدم</td>
+      <td><span class="status active">منتظم</span></td>
+    </tr>
+    <tr>
+      <td>سعيد أحمد</td>
+      <td>التحفيظ</td>
+      <td>80%</td>
+      <td>متوسط</td>
+      <td><span class="status warning">يحتاج متابعة</span></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
