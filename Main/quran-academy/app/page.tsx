@@ -1,3 +1,5 @@
+"use client"; // ضروري جداً في Next.js لاستخدام الـ Hooks والـ localStorage
+
 import React, { useState, useEffect } from 'react';
 
 // --- أنواع البيانات (Types) ---
@@ -75,20 +77,34 @@ const translations: Record<Lang, Translation> = {
 };
 
 const QuranAcademyHome: React.FC = () => {
-  const [lang, setLang] = useState<Lang>((localStorage.getItem("lang") as Lang) || "ar");
+  // نبدأ بلغة افتراضية لتجنب تعارض السيرفر مع المتصفح
+  const [lang, setLang] = useState<Lang>("ar");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const t = translations[lang];
 
-  // مزامنة اتجاه الصفحة واللغة عند تغيير الحالة
+  // تحميل اللغة المحفوظة عند فتح الصفحة لأول مرة
   useEffect(() => {
-    document.documentElement.lang = lang;
-    document.body.dir = lang === "ar" ? "rtl" : "ltr";
-    localStorage.setItem("lang", lang);
-  }, [lang]);
+    const savedLang = localStorage.getItem("lang") as Lang;
+    if (savedLang) setLang(savedLang);
+    setIsLoaded(true);
+  }, []);
+
+  // تحديث الـ DOM عند تغيير اللغة
+  useEffect(() => {
+    if (isLoaded) {
+      document.documentElement.lang = lang;
+      document.body.dir = lang === "ar" ? "rtl" : "ltr";
+      localStorage.setItem("lang", lang);
+    }
+  }, [lang, isLoaded]);
 
   const toggleLang = () => setLang(prev => (prev === "ar" ? "en" : "ar"));
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // منع ظهور محتوى خاطئ قبل تحميل اللغة من الـ localStorage
+  if (!isLoaded) return null;
 
   return (
     <div style={styles.wrapper}>
@@ -146,7 +162,10 @@ const QuranAcademyHome: React.FC = () => {
 
       {/* Floating Lang Button */}
       <button 
-        style={{ ...styles.floatingLangBtn, [lang === 'ar' ? 'left' : 'right']: '20px' }} 
+        style={{ 
+          ...styles.floatingLangBtn, 
+          [lang === 'ar' ? 'left' : 'right']: '20px' 
+        }} 
         onClick={toggleLang}
       >
         {lang === "ar" ? "EN" : "AR"}
@@ -161,6 +180,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontFamily: 'Cairo, Poppins, sans-serif',
     background: '#f8fafc',
     color: '#0f172a',
+    minHeight: '100vh',
   },
   header: {
     background: '#fff',
@@ -184,10 +204,10 @@ const styles: Record<string, React.CSSProperties> = {
     color: '#000',
     fontWeight: 600,
   },
-  menuBtn: { fontSize: '26px', cursor: 'pointer', display: 'none' }, // تحتاج لـ Media Query في CSS حقيقي
+  menuBtn: { fontSize: '26px', cursor: 'pointer', display: 'none' },
   hero: {
-    background: 'linear-gradient(rgba(30, 58, 138, 0.8), rgba(30, 58, 138, 0.8)), url("/Islamic-Background.jpg")',
-    backgroundSize: 'cover',
+    background: 'linear-gradient(rgba(30, 58, 138, 0.8), rgba(30, 58, 138, 0.8))',
+    backgroundColor: '#1e3a8a',
     color: '#fff',
     textAlign: 'center',
     padding: '90px 20px',
