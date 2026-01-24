@@ -67,7 +67,7 @@ const translations: Record<Lang, Translation> = {
     programsTitle: "Our Programs",
     p1: "Large Group Classes",
     p2: "Small Group Classes",
-    p3: "One-to-One Classes",
+    p3: "Individual Classes",
     details: "Details",
     contactTitle: "Contact Us",
     send: "Send",
@@ -85,11 +85,11 @@ const QuranAcademyHome: React.FC = () => {
   const t = translations[lang];
 
   // تحميل اللغة المحفوظة عند فتح الصفحة لأول مرة
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang") as Lang;
-    if (savedLang) setLang(savedLang);
-    setIsLoaded(true);
-  }, []);
+useEffect(() => {
+  document.documentElement.lang = lang;
+  document.body.dir = lang === "ar" ? "rtl" : "ltr";
+  localStorage.setItem("lang", lang);
+}, [lang]);
 
   // تحديث الـ DOM عند تغيير اللغة
   useEffect(() => {
@@ -140,7 +140,9 @@ const QuranAcademyHome: React.FC = () => {
           {[t.p1, t.p2, t.p3].map((program, index) => (
             <div key={index} style={styles.programCard}>
               <h3 style={styles.programName}>{program}</h3>
-              <a href={`/program-${index}`} style={styles.programBtn}>{t.details}</a>
+              <a href={"#groupclasses/page.tsx"} style={styles.programBtn}>{t.p1}</a>
+              <a href={"#individual/page.tsx"} style={styles.programBtn}>{t.p2}</a>
+              <a href={"#smallclasses/page.tsx"} style={styles.programBtn}>{t.p3}</a>
             </div>
           ))}
         </div>
