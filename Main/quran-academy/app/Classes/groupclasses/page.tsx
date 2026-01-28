@@ -1,54 +1,21 @@
-import React, { useState, useEffect } from 'react';
+"use client";
 
-// --- التعريفات (Types) ---
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+
 type Lang = 'ar' | 'en';
 
-interface TranslationData {
-  logo: string;
-  title: string;
-  intro: string;
-  featuresTitle: string;
-  features: string[];
-  suitableTitle: string;
-  suitable: string[];
-  detailsTitle: string;
-  details: string[];
-  register: string;
-  home: string;
-  programs: string;
-  contact: string;
-  footer: string;
-}
-
-const translations: Record<Lang, TranslationData> = {
+const translations = {
   ar: {
     logo: "أكاديمية القرآن",
     title: "الحلقات الجماعية الكبرى",
-    intro: "الحلقات الجماعية الكبرى مخصصة للتعليم الجماعي المنظم بعدد كبير من الطلاب، وتهدف إلى تحسين التلاوة وتعليم أساسيات التجويد في بيئة تعليمية منضبطة.",
+    intro: "حلقات تعليمية تفاعلية تجمع عدداً من الطلاب لتبادل المعرفة وتحفيز الحفظ والمراجعة الجماعية.",
     featuresTitle: "مميزات الحلقة",
-    features: [
-      "عدد طلاب كبير",
-      "تنظيم جماعي واضح",
-      "تصحيح عام للتلاوة",
-      "مناسبة للمبتدئين"
-    ],
+    features: ["بيئة محفزة", "مراجعة جماعية", "تبادل خبرات", "منهج منظم"],
     suitableTitle: "مناسبة لـ",
-    suitable: [
-      "المبتدئين",
-      "تعلم أساسيات التلاوة",
-      "الالتحاق بالحلقات لأول مرة",
-      "الانتقال لاحقًا لمستويات أعلى"
-    ],
+    suitable: ["المبتدئين", "طلاب المدارس", "الحفظ المكثف", "المراجعة العامة"],
     detailsTitle: "تفاصيل الحلقة",
-    details: [
-      "عدد الطلاب: 10 – 20 طالب",
-      "الفئة: الرجال والفتيان",
-      "مدة الحصة : ساعتان ",
-      "المنهج: أساسيات التلاوة والتجويد",
-      "المستوى: مبتدئ",
-      "المنصة: Zoom ",
-      "الأسعار: الاشتراك كامل 50 دولار، الجزئي 25 دولار"
-    ],
+    details: ["عدد الطلاب: 15-20", "الفئة: رجال وفتيان", "المدة: ساعتان", "المنهج: تلاوة وحفظ", "المستوى: عام", "المنصة: Zoom"],
     register: "اشترك الآن",
     home: "الرئيسية",
     programs: "البرامج",
@@ -58,31 +25,13 @@ const translations: Record<Lang, TranslationData> = {
   en: {
     logo: "Quran Academy",
     title: "Large Group Classes",
-    intro: "Large group classes are designed for structured learning with a larger number of students, focusing on improving recitation and teaching basic Tajweed in an organized environment.",
+    intro: "Interactive educational circles that bring together students to exchange knowledge and stimulate collective memorization.",
     featuresTitle: "Class Features",
-    features: [
-      "Large number of students",
-      "Well-organized group learning",
-      "General recitation correction",
-      "Ideal for beginners"
-    ],
+    features: ["Motivating environment", "Group revision", "Experience sharing", "Structured curriculum"],
     suitableTitle: "Suitable For",
-    suitable: [
-      "Beginners",
-      "Learning basic recitation",
-      "First-time enrollment",
-      "Progressing to higher levels later"
-    ],
+    suitable: ["Beginners", "School students", "Intensive memorization", "General revision"],
     detailsTitle: "Class Details",
-    details: [
-      "Students: 10 – 20",
-      "Category: Men & Boys",
-      "Duration: 2 hours",
-      "Curriculum: Basic Recitation & Tajweed",
-      "Level: Beginner",
-      "Platform: Zoom ",
-      "Price: Full subscription $50, Partial subscription $25"
-    ],
+    details: ["Students: 15-20", "Category: Men & Boys", "Duration: 2 hours", "Curriculum: Recitation", "Level: General", "Platform: Zoom"],
     register: "Subscribe Now",
     home: "Home",
     programs: "Programs",
@@ -91,239 +40,97 @@ const translations: Record<Lang, TranslationData> = {
   }
 };
 
-const LargeGroupClasses: React.FC = () => {
+export default function GroupClasses() {
   const [lang, setLang] = useState<Lang>('ar');
-  const t = translations[lang];
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // مزامنة اتجاه الصفحة واللغة مع حالة التطبيق
   useEffect(() => {
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.title = t.title;
-  }, [lang, t.title]);
+    const savedLang = localStorage.getItem("lang") as Lang;
+    if (savedLang) setLang(savedLang);
+    setIsLoaded(true);
+  }, []);
 
-  const toggleLang = () => {
-    setLang((prev) => (prev === 'ar' ? 'en' : 'ar'));
-  };
+  useEffect(() => {
+    if (isLoaded) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    }
+  }, [lang, isLoaded]);
 
-  const goToPayment = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const program = "الحلقات الجماعية الكبرى";
-    const price = 50; // السعر المحدد لهذه الصفحة
-    window.location.href = `payment.html?program=${encodeURIComponent(program)}&price=${price}`;
-  };
+  if (!isLoaded) return null;
+  const t = translations[lang];
 
   return (
     <div style={styles.container}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-        body { margin: 0; padding: 0; }
-      `}</style>
-
-      {/* Header */}
       <header style={styles.header}>
         <div style={styles.logo}>{t.logo}</div>
         <nav style={styles.nav}>
-          <a href="HomePage.html" style={styles.navLink}>{t.home}</a>
-          <a href="HomePage.html#programs" style={styles.navLink}>{t.programs}</a>
-          <a href="HomePage.html#contact" style={styles.navLink}>{t.contact}</a>
+          <Link href="/" style={styles.navLink}>{t.home}</Link>
+          <Link href="/#programs" style={styles.navLink}>{t.programs}</Link>
+          <Link href="/#contact" style={styles.navLink}>{t.contact}</Link>
         </nav>
-        <button onClick={toggleLang} style={styles.langBtn}>
-          {lang === 'ar' ? 'EN' : 'AR'}
-        </button>
+        <button onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')} style={styles.langBtn}>{lang === 'ar' ? 'EN' : 'AR'}</button>
       </header>
 
-      {/* Main Section */}
       <main style={styles.section}>
-        <h1 style={styles.mainTitle}>{t.title}</h1>
-
-        <div style={styles.introBox}>{t.intro}</div>
+        <h1 style={styles.pageTitle}>{t.title}</h1>
+        <div style={styles.intro}>{t.intro}</div>
 
         <div style={styles.cardsGrid}>
-          {/* Card 1: Features */}
           <div style={styles.card}>
             <h3 style={styles.cardHeader}>{t.featuresTitle}</h3>
             <ul style={styles.list}>
               {t.features.map((item, idx) => (
-                <li key={idx} style={styles.listItem}>
-                  <span style={styles.checkIcon}>✓</span> {item}
-                </li>
+                <li key={idx} style={styles.listItem}><span style={styles.checkMark}>✓</span> {item}</li>
               ))}
             </ul>
           </div>
-
-          {/* Card 2: Suitable For */}
           <div style={styles.card}>
             <h3 style={styles.cardHeader}>{t.suitableTitle}</h3>
             <ul style={styles.list}>
               {t.suitable.map((item, idx) => (
-                <li key={idx} style={styles.listItem}>
-                  <span style={styles.checkIcon}>✓</span> {item}
-                </li>
+                <li key={idx} style={styles.listItem}><span style={styles.checkMark}>✓</span> {item}</li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Info Section */}
-        <div style={styles.infoWrapper}>
+        <div style={styles.infoSection}>
           <h2 style={styles.cardHeader}>{t.detailsTitle}</h2>
           <div style={styles.infoGrid}>
-            {t.details.map((detail, idx) => (
-              <div key={idx} style={styles.infoBox}>
-                {detail}
-              </div>
-            ))}
+            {t.details.map((detail, idx) => (<div key={idx} style={styles.infoBox}>{detail}</div>))}
           </div>
         </div>
 
-        {/* Call to Action */}
-        <div style={styles.ctaArea}>
-          <a href="#" onClick={goToPayment} style={styles.registerBtn}>
-            {t.register}
-          </a>
+        <div style={styles.cta}>
+          <Link href={{ pathname: '/payment', query: { program: t.title, price: '60' } }} style={styles.ctaBtn}>{t.register}</Link>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer style={styles.footer}>
-        {t.footer}
-      </footer>
+      <footer style={styles.footer}>{t.footer}</footer>
     </div>
   );
-};
+}
 
-// --- الستايلات (CSS-in-JS) ---
 const styles: Record<string, React.CSSProperties> = {
-  container: {
-    fontFamily: 'Cairo, sans-serif',
-    backgroundColor: '#f8fafc',
-    color: '#0f172a',
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  header: {
-    backgroundColor: '#ffffff',
-    padding: '20px',
-    boxShadow: '0 10px 25px rgba(0,0,0,.08)',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-  },
-  logo: {
-    fontSize: '22px',
-    fontWeight: 700,
-    color: '#1e3a8a',
-  },
-  nav: {
-    display: 'flex',
-    gap: '20px',
-  },
-  navLink: {
-    textDecoration: 'none',
-    color: '#0f172a',
-    fontWeight: 600,
-  },
-  langBtn: {
-    backgroundColor: '#fbbf24',
-    border: 'none',
-    padding: '8px 16px',
-    borderRadius: '20px',
-    fontWeight: 700,
-    cursor: 'pointer',
-  },
-  section: {
-    maxWidth: '1100px',
-    margin: '60px auto',
-    padding: '0 20px',
-    flex: 1,
-  },
-  mainTitle: {
-    textAlign: 'center',
-    color: '#1e3a8a',
-    marginBottom: '30px',
-  },
-  introBox: {
-    backgroundColor: '#ffffff',
-    padding: '35px',
-    borderRadius: '20px',
-    boxShadow: '0 10px 25px rgba(0,0,0,.08)',
-    textAlign: 'center',
-    lineHeight: 2,
-    fontSize: '18px',
-  },
-  cardsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '25px',
-    marginTop: '50px',
-  },
-  card: {
-    backgroundColor: '#ffffff',
-    padding: '30px',
-    borderRadius: '20px',
-    boxShadow: '0 10px 25px rgba(0,0,0,.08)',
-  },
-  cardHeader: {
-    color: '#1e3a8a',
-    marginTop: 0,
-    marginBottom: '20px',
-  },
-  list: {
-    listStyle: 'none',
-    padding: 0,
-  },
-  listItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    marginBottom: '12px',
-    lineHeight: 1.6,
-  },
-  checkIcon: {
-    color: '#fbbf24',
-    fontWeight: 'bold',
-  },
-  infoWrapper: {
-    marginTop: '60px',
-    backgroundColor: '#ffffff',
-    padding: '40px',
-    borderRadius: '20px',
-    boxShadow: '0 10px 25px rgba(0,0,0,.08)',
-  },
-  infoGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '20px',
-  },
-  infoBox: {
-    backgroundColor: '#f1f5f9',
-    padding: '20px',
-    borderRadius: '15px',
-    fontSize: '15px',
-  },
-  ctaArea: {
-    textAlign: 'center',
-    margin: '70px 0',
-  },
-  registerBtn: {
-    backgroundColor: '#fbbf24',
-    padding: '15px 40px',
-    borderRadius: '40px',
-    textDecoration: 'none',
-    fontWeight: 700,
-    color: '#000',
-    display: 'inline-block',
-  },
-  footer: {
-    backgroundColor: '#1e3a8a',
-    color: '#ffffff',
-    textAlign: 'center',
-    padding: '25px',
-    marginTop: 'auto',
-  },
+  container: { fontFamily: 'Cairo, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' },
+  header: { backgroundColor: '#fff', padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 10px 25px rgba(0,0,0,0.08)', position: 'sticky', top: 0, zIndex: 100 },
+  logo: { fontSize: '22px', fontWeight: 700, color: '#1e3a8a' },
+  nav: { display: 'flex', gap: '15px' },
+  navLink: { textDecoration: 'none', color: '#0f172a', fontWeight: 600 },
+  langBtn: { backgroundColor: '#fbbf24', border: 'none', padding: '8px 16px', borderRadius: '20px', fontWeight: 'bold', cursor: 'pointer' },
+  section: { maxWidth: '1100px', margin: '60px auto', padding: '0 20px' },
+  pageTitle: { textAlign: 'center', color: '#1e3a8a', fontSize: '32px', marginBottom: '20px' },
+  intro: { backgroundColor: '#fff', padding: '35px', borderRadius: '20px', boxShadow: '0 10px 25px rgba(0,0,0,0.08)', textAlign: 'center', fontSize: '18px', lineHeight: 2 },
+  cardsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px', marginTop: '50px' },
+  card: { backgroundColor: '#fff', padding: '30px', borderRadius: '20px', boxShadow: '0 10px 25px rgba(0,0,0,0.08)' },
+  cardHeader: { color: '#1e3a8a', marginBottom: '15px' },
+  list: { listStyle: 'none', padding: 0 },
+  listItem: { display: 'flex', gap: '10px', marginBottom: '10px', alignItems: 'center' },
+  checkMark: { color: '#fbbf24', fontWeight: 'bold' },
+  infoSection: { marginTop: '60px', backgroundColor: '#fff', padding: '40px', borderRadius: '20px', boxShadow: '0 10px 25px rgba(0,0,0,0.08)' },
+  infoGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginTop: '20px' },
+  infoBox: { backgroundColor: '#f1f5f9', padding: '20px', borderRadius: '15px', fontSize: '16px' },
+  cta: { textAlign: 'center', margin: '70px 0' },
+  ctaBtn: { backgroundColor: '#fbbf24', padding: '15px 40px', borderRadius: '40px', textDecoration: 'none', fontWeight: 'bold', color: '#000', display: 'inline-block' },
+  footer: { backgroundColor: '#1e3a8a', color: '#fff', padding: '25px', textAlign: 'center' }
 };
-
-export default LargeGroupClasses; 

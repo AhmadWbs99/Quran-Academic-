@@ -1,229 +1,100 @@
-import React, { useState, useEffect } from 'react';
+"use client";
 
-// --- أنواع البيانات (Types) ---
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 type Lang = 'ar' | 'en';
 
-interface Translation {
-  logo: string;
-  navHome: string;
-  navPrograms: string;
-  navContact: string;
-  pageTitle: string;
-  mainTitle: string;
-  subtitle: string;
-  student: string;
-  teacher: string;
-  continueBtn: string;
-}
-
-const translations: Record<Lang, Translation> = {
+const translations = {
   ar: {
     logo: "أكاديمية القرآن",
-    navHome: "الرئيسية",
-    navPrograms: "البرامج",
-    navContact: "تواصل",
-    pageTitle: "إنشاء حساب",
-    mainTitle: "إنشاء حساب",
+    title: "إنشاء حساب جديد",
     subtitle: "اختر نوع الحساب للمتابعة",
     student: "طالب",
     teacher: "معلّم",
-    continueBtn: "متابعة التسجيل"
+    continueBtn: "متابعة التسجيل",
+    backLogin: "لديك حساب بالفعل؟ سجل دخولك"
   },
   en: {
     logo: "Quran Academy",
-    navHome: "Home",
-    navPrograms: "Programs",
-    navContact: "Contact",
-    pageTitle: "Create Account",
-    mainTitle: "Create Account",
+    title: "Create New Account",
     subtitle: "Choose account type to continue",
     student: "Student",
     teacher: "Teacher",
-    continueBtn: "Continue Registration"
+    continueBtn: "Continue Registration",
+    backLogin: "Already have an account? Login"
   }
 };
 
-const RegistrationType: React.FC = () => {
+export default function RegistrationType() {
+  const router = useRouter();
   const [lang, setLang] = useState<Lang>('ar');
   const [role, setRole] = useState<'student' | 'teacher'>('student');
+  const [isLoaded, setIsLoaded] = useState(false);
 
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang") as Lang;
+    if (savedLang) setLang(savedLang);
+    setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    }
+  }, [lang, isLoaded]);
+
+  if (!isLoaded) return null;
   const t = translations[lang];
 
-  // مزامنة اتجاه الصفحة عند تغيير اللغة
-  useEffect(() => {
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.title = t.pageTitle;
-  }, [lang, t.pageTitle]);
-
-  const toggleLang = () => setLang(prev => (prev === 'ar' ? 'en' : 'ar'));
-
-  const handleRegister = () => {
-    if (role === 'teacher') {
-      window.location.href = "/teacher-register";
-    } else {
-      window.location.href = "/student-register";
-    }
+  const handleNext = () => {
+    router.push(role === 'teacher' ? '/register/teacher' : '/register/student');
   };
 
   return (
-    <div style={styles.body}>
-      {/* Header */}
-      <header style={styles.header}>
+    <div style={styles.pageWrapper}>
+      <div style={styles.card}>
         <div style={styles.logo}>{t.logo}</div>
-        <nav style={styles.nav}>
-          <a href="/home" style={styles.navLink}>{t.navHome}</a>
-          <a href="/home#programs" style={styles.navLink}>{t.navPrograms}</a>
-          <a href="/home#contact" style={styles.navLink}>{t.navContact}</a>
-        </nav>
-        <button style={styles.langBtn} onClick={toggleLang}>
-          {lang === 'ar' ? 'EN' : 'AR'}
-        </button>
-      </header>
+        <h2 style={styles.title}>{t.title}</h2>
+        <p style={styles.subtitle}>{t.subtitle}</p>
 
-      {/* Main Content */}
-      <div style={styles.container}>
-        <div style={styles.registerBox}>
-          <h2 style={styles.title}>{t.mainTitle}</h2>
-          <p style={styles.subtitle}>{t.subtitle}</p>
-
-          <div style={styles.userTypeGrid}>
-            <label style={{
-              ...styles.roleLabel,
-              ...(role === 'student' ? styles.activeRole : {})
-            }}>
-              <input
-                type="radio"
-                name="role"
-                value="student"
-                checked={role === 'student'}
-                onChange={() => setRole('student')}
-                style={styles.radioInput}
-              />
-              <span>{t.student}</span>
-            </label>
-
-            <label style={{
-              ...styles.roleLabel,
-              ...(role === 'teacher' ? styles.activeRole : {})
-            }}>
-              <input
-                type="radio"
-                name="role"
-                value="teacher"
-                checked={role === 'teacher'}
-                onChange={() => setRole('teacher')}
-                style={styles.radioInput}
-              />
-              <span>{t.teacher}</span>
-            </label>
+        <div style={styles.grid}>
+          <div 
+            onClick={() => setRole('student')}
+            style={{...styles.roleCard, ...(role === 'student' ? styles.activeCard : {})}}
+          >
+            <div style={styles.icon}>🎓</div>
+            <span>{t.student}</span>
           </div>
-
-          <button style={styles.btn} onClick={handleRegister}>
-            {t.continueBtn}
-          </button>
+          <div 
+            onClick={() => setRole('teacher')}
+            style={{...styles.roleCard, ...(role === 'teacher' ? styles.activeCard : {})}}
+          >
+            <div style={styles.icon}>👨‍🏫</div>
+            <span>{t.teacher}</span>
+          </div>
         </div>
+
+        <button style={styles.btn} onClick={handleNext}>{t.continueBtn}</button>
+        
+        <Link href="/login" style={styles.backLink}>{t.backLogin}</Link>
       </div>
     </div>
   );
-};
+}
 
-// --- التنسيقات (Styles) ---
 const styles: Record<string, React.CSSProperties> = {
-  body: {
-    fontFamily: 'Cairo, sans-serif',
-    background: '#f8fafc',
-    minHeight: '100vh',
-    margin: 0,
-  },
-  header: {
-    background: '#ffffff',
-    padding: '20px 40px',
-    boxShadow: '0 10px 25px rgba(0,0,0,.08)',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  logo: {
-    fontSize: '22px',
-    fontWeight: 700,
-    color: '#1e3a8a',
-  },
-  nav: {
-    display: 'flex',
-    gap: '20px',
-  },
-  navLink: {
-    textDecoration: 'none',
-    color: '#0f172a',
-    fontWeight: 600,
-  },
-  langBtn: {
-    background: '#fbbf24',
-    border: 'none',
-    width: '40px',
-    height: '40px',
-    borderRadius: '20px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-  },
-  container: {
-    padding: '80px 20px',
-  },
-  registerBox: {
-    maxWidth: '420px',
-    margin: '0 auto',
-    background: '#fff',
-    padding: '35px',
-    borderRadius: '20px',
-    boxShadow: '0 15px 30px rgba(0,0,0,.08)',
-    textAlign: 'center',
-  },
-  title: {
-    fontSize: '24px',
-    margin: '0 0 8px 0',
-    color: '#0f172a',
-  },
-  subtitle: {
-    fontSize: '14px',
-    color: '#666',
-    marginBottom: '25px',
-  },
-  userTypeGrid: {
-    display: 'flex',
-    gap: '15px',
-    marginBottom: '25px',
-  },
-  roleLabel: {
-    flex: 1,
-    padding: '12px',
-    border: '2px solid #e5e7eb',
-    borderRadius: '14px',
-    textAlign: 'center',
-    cursor: 'pointer',
-    fontWeight: 600,
-    transition: '0.3s',
-  },
-  activeRole: {
-    borderColor: '#fbbf24',
-    background: '#fef3c7',
-    color: '#000',
-  },
-  radioInput: {
-    display: 'none',
-  },
-  btn: {
-    width: '100%',
-    padding: '14px',
-    background: '#1e3a8a',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '30px',
-    fontWeight: 700,
-    cursor: 'pointer',
-    fontSize: '16px',
-    transition: 'background 0.3s',
-  }
+  pageWrapper: { fontFamily: 'Cairo, sans-serif', backgroundColor: '#f1f5f9', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' },
+  card: { backgroundColor: '#fff', width: '100%', maxWidth: '450px', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,.08)', textAlign: 'center' },
+  logo: { fontSize: '22px', fontWeight: 700, color: '#1e3a8a', marginBottom: '20px' },
+  title: { fontSize: '24px', color: '#0f172a', marginBottom: '8px' },
+  subtitle: { color: '#64748b', marginBottom: '30px', fontSize: '15px' },
+  grid: { display: 'flex', gap: '15px', marginBottom: '30px' },
+  roleCard: { flex: 1, padding: '25px', borderRadius: '16px', border: '2px solid #e2e8f0', cursor: 'pointer', transition: '0.3s', fontWeight: 700 },
+  activeCard: { borderColor: '#fbbf24', backgroundColor: '#fffbeb', color: '#92400e' },
+  icon: { fontSize: '30px', marginBottom: '10px' },
+  btn: { width: '100%', padding: '15px', backgroundColor: '#1e3a8a', color: '#fff', border: 'none', borderRadius: '40px', fontWeight: 700, cursor: 'pointer', fontSize: '16px' },
+  backLink: { display: 'block', marginTop: '20px', color: '#64748b', textDecoration: 'none', fontSize: '14px' }
 };
-
-export default RegistrationType;

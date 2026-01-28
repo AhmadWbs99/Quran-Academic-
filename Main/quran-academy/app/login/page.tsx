@@ -1,4 +1,8 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // --- التعريفات البرمجية (Types) ---
 type Lang = 'en' | 'ar';
@@ -14,6 +18,7 @@ interface TranslationData {
   noAccount: string;
   register: string;
   logo: string;
+  home: string;
 }
 
 const translations: Record<Lang, TranslationData> = {
@@ -21,12 +26,13 @@ const translations: Record<Lang, TranslationData> = {
     title: "Login",
     student: "Student",
     teacher: "Teacher",
-    email: "Email",
+    email: "Email Address",
     password: "Password",
     login: "Login",
     noAccount: "Don’t have an account?",
     register: "Create one",
-    logo: "Quran Academy"
+    logo: "Quran Academy",
+    home: "Back to Home"
   },
   ar: {
     title: "تسجيل الدخول",
@@ -37,36 +43,53 @@ const translations: Record<Lang, TranslationData> = {
     login: "دخول",
     noAccount: "ليس لديك حساب؟",
     register: "سجل الآن",
-    logo: "أكاديمية القرآن"
+    logo: "أكاديمية القرآن",
+    home: "العودة للرئيسية"
   }
 };
 
 const Login: React.FC = () => {
-  // 1. الحالات (States)
-  const [lang, setLang] = useState<Lang>('en');
+  const router = useRouter();
+  const [lang, setLang] = useState<Lang>('ar');
   const [role, setRole] = useState<Role>('student');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // 1. تحميل اللغة المحفوظة
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang") as Lang;
+    if (savedLang) setLang(savedLang);
+    setIsLoaded(true);
+  }, []);
+
+  // 2. تحديث اتجاه الصفحة
+  useEffect(() => {
+    if (isLoaded) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    }
+  }, [lang, isLoaded]);
+
+  if (!isLoaded) return null;
 
   const t = translations[lang];
 
-  // 2. تحديث اتجاه الصفحة عند تغيير اللغة
-  useEffect(() => {
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  }, [lang]);
-
-  // 3. معالجة تسجيل الدخول
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    // هنا مستقبلاً نضع التحقق من البيانات
     if (role === 'student') {
-      window.location.href = "student/dashboard.html";
+      router.push('/student/dashboard');
     } else {
-      window.location.href = "teacher/dashboard.html";
+      router.push('/teacher/dashboard');
     }
   };
 
-  const toggleLang = () => setLang(prev => (prev === 'en' ? 'ar' : 'en'));
+  const toggleLang = () => {
+    const newLang = lang === 'en' ? 'ar' : 'en';
+    setLang(newLang);
+    localStorage.setItem("lang", newLang);
+  };
 
   return (
     <div style={styles.pageWrapper}>
@@ -74,7 +97,7 @@ const Login: React.FC = () => {
         
         {/* Top Bar */}
         <div style={styles.topBar}>
-          <div style={styles.logo}>{t.logo}</div>
+          <Link href="/" style={styles.logoLink}>{t.logo}</Link>
           <button style={styles.langBtn} onClick={toggleLang}>
             {lang === 'en' ? 'AR' : 'EN'}
           </button>
@@ -105,7 +128,7 @@ const Login: React.FC = () => {
         </div>
 
         {/* Login Form */}
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} style={styles.form}>
           <input
             type="email"
             placeholder={t.email}
@@ -131,106 +154,125 @@ const Login: React.FC = () => {
         {/* Register Link */}
         <div style={styles.registerLink}>
           <span>{t.noAccount} </span>
-          <a href="register.html" style={styles.link}>
+          <Link href="/register" style={styles.link}>
             {t.register}
-          </a>
+          </Link>
+        </div>
+
+        <div style={{marginTop: '20px'}}>
+           <Link href="/" style={styles.homeBtn}>{t.home}</Link>
         </div>
       </div>
     </div>
   );
 };
 
-// --- التنسيقات (Styles) ---
+// --- التنسيقات (تم تحديثها لتناسب الهوية البصرية للأكاديمية) ---
 const styles: Record<string, React.CSSProperties> = {
   pageWrapper: {
-    fontFamily: 'Arial, sans-serif',
-    backgroundColor: '#f3f4f6',
+    fontFamily: 'Cairo, sans-serif',
+    backgroundColor: '#f1f5f9',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
-    margin: 0,
+    minHeight: '100vh',
+    padding: '20px',
   },
   card: {
     backgroundColor: '#fff',
-    width: '380px',
-    padding: '30px',
-    borderRadius: '16px',
-    boxShadow: '0 10px 25px rgba(0,0,0,.1)',
-    boxSizing: 'border-box',
+    width: '100%',
+    maxWidth: '400px',
+    padding: '40px',
+    borderRadius: '24px',
+    boxShadow: '0 20px 40px rgba(0,0,0,.08)',
+    textAlign: 'center',
   },
   topBar: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '15px',
+    marginBottom: '30px',
   },
-  logo: {
+  logoLink: {
     fontWeight: 'bold',
     fontSize: '18px',
-    color: '#1f2933',
+    color: '#1e3a8a',
+    textDecoration: 'none'
   },
   langBtn: {
     border: 'none',
-    background: '#eee',
-    padding: '5px 12px',
+    background: '#f1f5f9',
+    padding: '6px 14px',
     borderRadius: '20px',
     cursor: 'pointer',
     fontSize: '13px',
+    fontWeight: 'bold'
   },
   h2: {
-    textAlign: 'center',
-    marginBottom: '20px',
-    color: '#1f2933',
+    marginBottom: '25px',
+    color: '#1e3a8a',
+    fontSize: '26px'
   },
   rolesContainer: {
     display: 'flex',
-    gap: '10px',
-    marginBottom: '20px',
+    gap: '12px',
+    marginBottom: '25px',
   },
   roleBtn: {
     flex: 1,
-    padding: '10px',
-    borderRadius: '20px',
-    border: '1px solid #ddd',
+    padding: '12px',
+    borderRadius: '30px',
+    border: '1px solid #e2e8f0',
     backgroundColor: '#fff',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
+    fontSize: '15px'
   },
   activeRole: {
     backgroundColor: '#fbbf24',
     borderColor: '#fbbf24',
     fontWeight: 'bold',
+    color: '#000'
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px'
   },
   input: {
     width: '100%',
-    padding: '12px',
-    marginBottom: '15px',
-    borderRadius: '10px',
-    border: '1px solid #ccc',
-    boxSizing: 'border-box',
+    padding: '14px',
+    borderRadius: '12px',
+    border: '1px solid #e2e8f0',
     fontSize: '15px',
+    outline: 'none',
   },
   loginBtn: {
     width: '100%',
-    padding: '12px',
+    padding: '14px',
     border: 'none',
-    borderRadius: '30px',
+    borderRadius: '40px',
     backgroundColor: '#fbbf24',
     fontWeight: 'bold',
-    fontSize: '16px',
+    fontSize: '17px',
     cursor: 'pointer',
+    marginTop: '10px'
   },
   registerLink: {
-    textAlign: 'center',
-    marginTop: '15px',
+    marginTop: '20px',
     fontSize: '14px',
+    color: '#64748b'
   },
   link: {
-    color: '#f59e0b',
+    color: '#1e3a8a',
     textDecoration: 'none',
     fontWeight: 'bold',
   },
+  homeBtn: {
+    fontSize: '13px',
+    color: '#94a3b8',
+    textDecoration: 'none'
+  }
 };
 
 export default Login;
