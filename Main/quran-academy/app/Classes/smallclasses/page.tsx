@@ -103,7 +103,7 @@ export default function SmallGroupClasses() {
         </div>
 
         <div style={styles.cta}>
-          <Link href={{ pathname: '/payment', query: { program: t.title, price: '100' } }} style={styles.ctaBtn}>{t.register}</Link>
+          <Link href={{ pathname: '/payment', query: { program: t.title, price: '50' } }} style={styles.ctaBtn}>{t.register}</Link>
         </div>
       </main>
       <footer style={styles.footer}>{t.footer}</footer>

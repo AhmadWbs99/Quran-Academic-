@@ -103,7 +103,7 @@ export default function IndividualClasses() {
         </div>
 
         <div style={styles.cta}>
-          <Link href={{ pathname: '/payment', query: { program: t.title, price: '200' } }} style={styles.ctaBtn}>{t.register}</Link>
+          <Link href={{ pathname: '/payment', query: { program: t.title, price: '60' } }} style={styles.ctaBtn}>{t.register}</Link>
         </div>
       </main>
       <footer style={styles.footer}>{t.footer}</footer>
