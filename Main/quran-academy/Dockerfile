@@ -1,5 +1,5 @@
 # اختيار نسخة Node.js مستقرة
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 # 1. تثبيت الاعتمادات فقط عند الحاجة
 FROM base AS deps
