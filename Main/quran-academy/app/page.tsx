@@ -1,5 +1,6 @@
 "use client"; // ضروري جداً في Next.js لاستخدام الـ Hooks والـ localStorage
 
+"use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link'; // أضفنا Link للتنقل السريع دون تحديث الصفحة
 

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from 'react';
 
 // --- تعريف هيكل البيانات (Types) ---
