@@ -3,7 +3,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link'; // أضفنا Link للتنقل السريع دون تحديث الصفحة
-
 // --- أنواع البيانات (Types) ---
 type Lang = 'ar' | 'en';
 
@@ -154,7 +153,7 @@ const styles: Record<string, React.CSSProperties> = {
   section: { padding: '80px 20px' },
   contactForm: { maxWidth: '450px', margin: 'auto', background: '#fff', padding: '35px', borderRadius: '18px', display: 'flex', flexDirection: 'column', gap: '15px', boxShadow: '0 10px 25px rgba(0,0,0,.05)' },
   input: { padding: '14px', borderRadius: '10px', border: '1px solid #e5e7eb' },
-  textarea: { padding: '14px', borderRadius: '10px', border: '1px solid #e5e7eb', minHeight: '100px' },
+  textarea: { padding: '14px', borderRadius: '10px',boxSizing: 'border-box',width: '100%', outline: 'none', resize: 'none', border: '1px solid #e5e7eb', minHeight: '100px' },
   sendBtn: { background: '#fbbf24', border: 'none', padding: '14px', borderRadius: '30px', fontWeight: 600, cursor: 'pointer' },
   footer: { background: '#1e3a8a', color: '#fff', textAlign: 'center', padding: '20px' },
   floatingLangBtn: { position: 'fixed', bottom: '20px', width: '50px', height: '50px', borderRadius: '50%', background: '#1e3a8a', color: '#fff', border: 'none', fontWeight: 'bold', cursor: 'pointer', zIndex: 1001 }
