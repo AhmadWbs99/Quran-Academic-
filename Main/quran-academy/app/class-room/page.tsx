@@ -1,67 +1,47 @@
-import React, { useState, useEffect, useRef } from 'react';
-// تأكد من استيراد ملف CSS هنا
-import './QuranClassroom.css'; 
+"use client";
 
-// تعريف أنواع الخصائص (Props) إذا أردت تمرير بيانات للمكون
+import React, { useState, useEffect, useRef } from 'react';
+
 interface QuranClassroomProps {
   studentName?: string;
   sessionTitle?: string;
 }
 
-const QuranClassroom: React.FC<QuranClassroomProps> = ({ 
+export default function QuranClassroom({ 
   studentName = "أحمد", 
   sessionTitle = "تصحيح تلاوة - سورة النبأ" 
-}) => {
+}: QuranClassroomProps) {
   
-  // إدارة حالة الصوت والكاميرا
   const [isMicOn, setIsMicOn] = useState(false);
   const [isCamOn, setIsCamOn] = useState(false);
-
-  // مرجع للكانفاس لربطه بـ Zoom Video SDK لاحقاً
   const videoCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  // دالة التعامل مع الميكروفون
   const toggleMic = async () => {
-    // Zoom SDK Logic Here:
-    // if (isMicOn) await mediaStream.muteAudio();
-    // else await mediaStream.unmuteAudio();
-    
     setIsMicOn(!isMicOn);
     console.log(`Microphone is now ${!isMicOn ? 'ON' : 'OFF'}`);
   };
 
-  // دالة التعامل مع الكاميرا
   const toggleCam = async () => {
-    // Zoom SDK Logic Here:
-    // if (isCamOn) await mediaStream.stopVideo();
-    // else await mediaStream.startVideo();
-
     setIsCamOn(!isCamOn);
     console.log(`Camera is now ${!isCamOn ? 'ON' : 'OFF'}`);
   };
 
-  // دالة الخروج
-  const leaveSession = async () => {
-    const confirmed = window.confirm("هل أنت متأكد من مغادرة الفصل؟");
-    if (confirmed) {
-      // await client.leave();
-      console.log("Leaving session...");
-      // router.push('/dashboard'); // في حال استخدام Next.js
-      window.location.href = "/dashboard";
+  const leaveSession = () => {
+    if (typeof window !== 'undefined') {
+      const confirmed = window.confirm("هل أنت متأكد من مغادرة الفصل؟");
+      if (confirmed) {
+        window.location.href = "/dashboard";
+      }
     }
   };
 
-  // محاكاة الانضمام عند فتح الصفحة
   useEffect(() => {
     console.log("Component mounted - Ready to initialize Zoom SDK");
-    // const client = ZoomVideo.createClient();
-    // client.init(...)
   }, []);
 
   return (
     <div className="classroom-wrapper" dir="rtl">
-      {/* 1. الشريط العلوي (Header) */}
-      <header>
+      <header style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem', background: '#f5f5f5' }}>
         <div className="logo">
           <span style={{ fontSize: '1.5rem' }}>📖</span> أكاديمية القرآن
         </div>
@@ -73,76 +53,41 @@ const QuranClassroom: React.FC<QuranClassroomProps> = ({
         </div>
       </header>
 
-      {/* 2. منطقة العمل الرئيسية */}
-      <div className="classroom-container">
-        
-        {/* الجانب الأيمن: فيديو الزووم */}
-        <div className="video-area" id="video-container">
-          <div className="zoom-canvas-placeholder">
-            {/* هذا الكانفاس هو الأهم لـ Zoom Video SDK */}
-            <canvas 
-              ref={videoCanvasRef} 
-              id="main-video-canvas" 
-              style={{ width: '100%', height: '100%', display: 'none' }} 
-            />
-            
-            <div style={{ opacity: 0.7 }}>
+      <div className="classroom-container" style={{ display: 'flex', height: '70vh' }}>
+        <div className="video-area" style={{ flex: 1, background: '#000', color: '#fff', position: 'relative' }}>
+          <div className="zoom-canvas-placeholder" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+            <canvas ref={videoCanvasRef} style={{ width: '100%', height: '100%', display: 'none' }} />
+            <div style={{ textAlign: 'center', opacity: 0.7 }}>
               <span style={{ fontSize: '3rem' }}>👳‍♂️</span>
               <p>فيديو الشيخ يظهر هنا</p>
-              <small style={{ color: '#aaa' }}>(يتم البث عبر Zoom Video SDK)</small>
             </div>
           </div>
-
-          {/* فيديو الطالب (PIP) */}
-          <div className="student-pip">
-             {isCamOn ? "صورتك (مفعلة)" : "كاميرتك مغلقة"}
+          <div className="student-pip" style={{ position: 'absolute', bottom: '10px', right: '10px', width: '150px', height: '100px', background: '#333', border: '1px solid #fff' }}>
+             {isCamOn ? "صورتك مفعلة" : "الكاميرا مغلقة"}
           </div>
         </div>
 
-        {/* الجانب الأيسر: المصحف */}
-        <div className="content-area">
-          <div className="content-header">
+        <div className="content-area" style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
+          <div className="content-header" style={{ borderBottom: '1px solid #ccc', marginBottom: '10px' }}>
             📄 المصحف الإلكتروني (الصفحة ٥٨٢)
           </div>
-          <div className="quran-page">
-            <p>
-              عَمَّ يَتَسَآءَلُونَ (1) عَنِ ٱلنَّبَإِ ٱلۡعَظِيمِ (2) ٱلَّذِي هُمۡ فِيهِ مُخۡتَلِفُونَ (3)...
-            </p>
+          <div className="quran-page" style={{ fontSize: '1.5rem', lineHeight: '2.5', textAlign: 'center' }}>
+            <p>عَمَّ يَتَسَآءَلُونَ (1) عَنِ ٱلنَّبَإِ ٱلۡعَظِيمِ (2) ٱلَّذِي هُمۡ فِيهِ مُخۡتَلِفُونَ (3)...</p>
           </div>
         </div>
       </div>
 
-      {/* 3. شريط التحكم السفلي */}
-      <div className="controls-bar">
-        <button 
-          className={`btn-control ${isMicOn ? 'btn-active' : ''}`} 
-          onClick={toggleMic} 
-          title="كتم/تشغيل الصوت"
-        >
-          {isMicOn ? '🎙️' : '🔇'}
+      <div className="controls-bar" style={{ display: 'flex', justifyContent: 'center', gap: '15px', padding: '20px' }}>
+        <button onClick={toggleMic} style={{ padding: '10px 20px', cursor: 'pointer' }}>
+          {isMicOn ? '🎙️ كتم' : '🔇 تشغيل الصوت'}
         </button>
-
-        <button 
-          className={`btn-control ${isCamOn ? 'btn-active' : ''}`} 
-          onClick={toggleCam} 
-          title="تشغيل/إيقاف الكاميرا"
-        >
-          {isCamOn ? '📷' : '🚫'}
+        <button onClick={toggleCam} style={{ padding: '10px 20px', cursor: 'pointer' }}>
+          {isCamOn ? '📷 إيقاف' : '🚫 تشغيل الكاميرا'}
         </button>
-
-        <button className="btn-control" title="مشاركة الشاشة">🖥️</button>
-        <button className="btn-control" title="رفع اليد">✋</button>
-        
-        <button 
-          className="btn-control btn-leave" 
-          onClick={leaveSession} 
-          title="خروج"
-        >
-          🚪
+        <button onClick={leaveSession} style={{ padding: '10px 20px', background: 'red', color: 'white', border: 'none', cursor: 'pointer' }}>
+          🚪 خروج
         </button>
       </div>
     </div>
   );
-};
-
-export default QuranClassroom;
+}
